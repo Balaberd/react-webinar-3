@@ -11,24 +11,22 @@ import PageLayout from "./components/page-layout";
  */
 function App({ store }) {
 
-  const list = store.getState().list;
-  const cartList = list.filter(({ count }) => count > 0);
-
+  const { list, cart } = store.getState();
 
   const callbacks = {
-    onAddItemToCart: useCallback((code) => {
-      store.addItemToCart(code);
+    onAddItemToCart: useCallback((item) => {
+      store.addItemToCart(item);
     }, [store]),
 
-    onRemoveFromCard: useCallback((code) => {
-      store.removeFromCart(code);
+    onRemoveFromCard: useCallback((item) => {
+      store.removeFromCart(item);
     }, [store]),
   }
 
   return (
     <PageLayout>
       <Head title='Магазин' />
-      <Controls list={cartList} itemHandler={callbacks.onRemoveFromCard} />
+      <Controls cart={cart} itemHandler={callbacks.onRemoveFromCard} />
       <List list={list} itemHandler={callbacks.onAddItemToCart} />
     </PageLayout>
   );

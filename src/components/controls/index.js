@@ -2,15 +2,14 @@ import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import { formatNumber, plural } from "../../utils";
 import { FORMATING_OPTIONS_GOODS, FORMATING_OPTIONS_PRICE } from "../../lib/const";
-import { getCartTotalInfo } from "./helpers";
 import Modal from "../modal";
 import Cart from "../cart";
 import './style.css';
 
-function Controls({ list, itemHandler }) {
+function Controls({ cart, itemHandler }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { totalCount, totalPrice } = getCartTotalInfo(list);
+  const { totalCount, totalPrice } = cart;
 
   const formatedValue = totalCount > 0
     ? `${totalCount} ${plural(totalCount, FORMATING_OPTIONS_GOODS)} / ${formatNumber(totalPrice, FORMATING_OPTIONS_PRICE)}`
@@ -26,9 +25,8 @@ function Controls({ list, itemHandler }) {
       {isModalOpen && (
         <Modal onModalClose={() => setIsModalOpen(false)}>
           <Cart
-            list={list}
+            cart={cart}
             itemHandler={itemHandler}
-            totalPrice={totalPrice}
             onClose={() => setIsModalOpen(false)}
           />
         </Modal>
@@ -38,12 +36,21 @@ function Controls({ list, itemHandler }) {
 }
 
 Controls.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.shape({
-    code: PropTypes.number,
-    title: PropTypes.string,
-    selected: PropTypes.bool,
-    count: PropTypes.number
-  })).isRequired,
+  cart: PropTypes.shape({
+    totalCount: PropTypes.number,
+    totalPrice: PropTypes.number,
+    list: PropTypes.shape({
+      [PropTypes.string]: PropTypes.shape({
+        count: PropTypes.number,
+        totalPrice: PropTypes.number,
+        item: PropTypes.shape({
+          code: PropTypes.number,
+          price: PropTypes.string,
+          title: PropTypes.string,
+        }).isRequired
+      })
+    }).isRequired
+  }).isRequired,
   itemHandler: PropTypes.func,
 };
 

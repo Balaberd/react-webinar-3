@@ -6,7 +6,11 @@ import { formatNumber } from "../../utils";
 import { FORMATING_OPTIONS_PRICE } from "../../lib/const";
 import './style.css';
 
-function Cart({ onClose, list, itemHandler, totalPrice }) {
+function Cart({ onClose, cart, itemHandler }) {
+
+  const { totalPrice } = cart;
+  const list = Object.values(cart.list).map(el => ({ ...el.item, count: el.count }))
+
   return (
     <div className='Cart'>
       <Head title='Корзина'>
@@ -31,13 +35,21 @@ function Cart({ onClose, list, itemHandler, totalPrice }) {
 }
 
 Cart.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.shape({
-    code: PropTypes.number,
-    title: PropTypes.string,
-    selected: PropTypes.bool,
-    count: PropTypes.number
-  })).isRequired,
-  totalPrice: PropTypes.number,
+  cart: PropTypes.shape({
+    totalCount: PropTypes.number,
+    totalPrice: PropTypes.number,
+    list: PropTypes.shape({
+      [PropTypes.string]: PropTypes.shape({
+        count: PropTypes.number,
+        totalPrice: PropTypes.number,
+        item: PropTypes.shape({
+          code: PropTypes.number,
+          price: PropTypes.string,
+          title: PropTypes.string,
+        }).isRequired
+      })
+    }).isRequired
+  }).isRequired,
   itemHandler: PropTypes.func,
   onClose: PropTypes.func
 };

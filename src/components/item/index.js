@@ -17,7 +17,7 @@ function Item({ isCartList, item, itemHandler }) {
       {isCartList && <div className='Item-count'>{`${count} шт`}</div>}
       <button
         className='Item-action'
-        onClick={() => itemHandler(code)}>{`${isCartList ? 'Удалить' : 'Добавить'}`}
+        onClick={() => itemHandler(item)}>{`${isCartList ? 'Удалить' : 'Добавить'}`}
       </button>
     </div>
   );
