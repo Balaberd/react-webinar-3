@@ -25,9 +25,11 @@
 .Item-count {
   white-space: nowrap;
   padding-left: 64px;
+  color: rgba(64, 64, 64, 1);
 }
 
 .Item-price {
   font-size: 18px;
   white-space: nowrap;
+  color: rgba(64, 64, 64, 1);
 }

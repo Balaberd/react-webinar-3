@@ -1,5 +1,3 @@
-import { generateCode } from "./utils";
-
 /**
  * Хранилище состояния приложения
  */
@@ -45,13 +43,15 @@ class Store {
     * @param item
     */
   removeFromCart(item) {
-    const { code } = item
-    const { cart } = this.getState()
+    const { code } = item;
+    const { cart } = this.state;
     const { totalCount, totalPrice, list } = cart;
 
+    // Новые значения общего количества товаров и их сумма
     const newTotalPrice = totalPrice - list[code].totalPrice;
     const newTotalCount = totalCount - list[code].count;
 
+    // Удаление товара из корзины
     delete list[code];
 
     const newCart = {
@@ -59,7 +59,7 @@ class Store {
       totalCount: newTotalCount,
       totalPrice: newTotalPrice,
       list: { ...list }
-    }
+    };
 
     this.setState({ ...this.state, cart: newCart });
   };
@@ -69,23 +69,26 @@ class Store {
    * @param item
    */
   addItemToCart(item) {
-    const { totalPrice, totalCount, list } = this.getState().cart;
+    const { totalPrice, totalCount, list } = this.state.cart;
     const { code, price } = item;
 
+    // Проверка наличия продукта в корзине
     const hasInCart = list.hasOwnProperty(code);
 
     const newCart = {
+      // Новые значения общей суммы и количества товара в корзине
       totalPrice: totalPrice + price,
       totalCount: totalCount + 1,
       list: {
         ...list,
         [code]: {
+          // Новые значения суммы и количества добавляемого товара
           count: hasInCart ? list[code].count + 1 : 1,
-          totalPrice: hasInCart ? list[code].count + 1 : 1,
+          totalPrice: hasInCart ? list[code].totalPrice + price : price,
           item
         }
       }
-    }
+    };
 
     this.setState({ ...this.state, cart: newCart });
   }
