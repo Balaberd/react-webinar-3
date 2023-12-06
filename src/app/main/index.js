@@ -6,6 +6,7 @@ import BasketTool from "../../components/basket-tool";
 import List from "../../components/list";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
+import Pagination from '../../components/pagination';
 
 function Main() {
 
@@ -43,7 +44,9 @@ function Main() {
       <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
                   sum={select.sum}/>
       <List list={select.list} renderItem={renders.item}/>
-      <button onClick={()=>callbacks.changePage(select.currentPage + 1)}>click</button>
+      <Pagination currentPage={select.currentPage}
+                  lastPage={25}
+                  onChangeCurrentPage={callbacks.changePage}/>
     </PageLayout>
 
   );

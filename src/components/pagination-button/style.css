@@ -1,0 +1,27 @@
+.PaginationButton {
+  border: none;
+  outline: none;
+  background: none;
+
+  min-width: 20px;
+  height: 20px;
+
+  cursor: pointer;
+  transition: .3s;
+}
+
+.PaginationButton:hover:not(.PaginationButton_active, .PaginationButton_gap) {
+  background-color: rgba(225, 225, 225, 1);
+}
+
+.PaginationButton_active {
+  color: rgba(255, 255, 255, 1);
+  background-color: rgba(0, 135, 233, 1);
+  cursor: auto;
+}
+
+.PaginationButton_gap {
+  color: rgba(204, 204, 204, 1);
+  cursor: auto;
+  width: 20px;
+}
