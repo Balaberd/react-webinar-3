@@ -26,6 +26,7 @@ function Main() {
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
+    changePage: useCallback(() => store.actions.pagination.setPage(2), []),
   }
 
   const renders = {
@@ -40,6 +41,7 @@ function Main() {
       <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
                   sum={select.sum}/>
       <List list={select.list} renderItem={renders.item}/>
+      <button onClick={callbacks.changePage}>click</button>
     </PageLayout>
 
   );
