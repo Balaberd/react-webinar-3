@@ -4,14 +4,14 @@ class Pagination extends StoreModule {
 
   initState() {
     return {
-      page: 1,
+      currentPage: 1,
     }
   }
 
   setPage(newPage) {
     this.setState({
       ...this.getState(),
-      page: newPage,
+      currentPage: newPage,
     }, `Текущая страница изменена на ${newPage}`);
   }
 }
