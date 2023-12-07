@@ -1,0 +1,24 @@
+.Item-info {
+  padding: 20px 40px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  font-size: 18px;
+}
+
+.Item-info-description {
+  margin: 0;
+  padding: 0;
+}
+
+.Item-info-price {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.Item-info-button {
+  align-self: start;
+  cursor: pointer;
+}

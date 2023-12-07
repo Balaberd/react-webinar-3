@@ -22,7 +22,7 @@ class Catalog extends StoreModule {
     const response = await fetch(`api/v1/articles?limit=10&skip=0&fields=items(_id, title, price),count`);
     const json = await response.json();
     const { items, count } = json.result;
-    console.log(this.getState())
+
     this.setState({
       ...this.getState(),
       list: items,
