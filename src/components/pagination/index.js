@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './style.css';
 import PaginationButton from "../pagination-button";
 
-const createPagesList = (currentPage, lastPage) => {
+const createPageNumbers = (currentPage, lastPage) => {
   const list = [];
   for (let i = 1; i <= lastPage; i += 1) {
     if (i === 1
@@ -19,15 +19,13 @@ const createPagesList = (currentPage, lastPage) => {
   return list;
 }
 
-function Pagination({ currentPage = 7, lastPage = 25, onChangeCurrentPage }) {
-
-  const pagesList = createPagesList(currentPage, lastPage);
-
+function Pagination({ currentPage, lastPage, onChangeCurrentPage }) {
+  const pagesList = createPageNumbers(currentPage, lastPage);
   return (
     <div className='Pagination'>
       {pagesList.map((page, ind) => (
         <PaginationButton
-          key={`${page}${ind}`}
+          key={ind}
           isActive={page === currentPage}
           isGap={page === null}
           onClick={() => onChangeCurrentPage(page)}

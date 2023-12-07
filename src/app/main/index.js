@@ -1,4 +1,4 @@
-import {memo, useCallback, useEffect} from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import Item from "../../components/item";
 import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
@@ -14,14 +14,16 @@ function Main() {
 
   const select = useSelector(state => ({
     list: state.catalog.list,
+    currentPage: state.catalog.currentPage,
+    pageLimit: state.catalog.pageLimit,
+    lastPage: state.catalog.lastPage,
     amount: state.basket.amount,
     sum: state.basket.sum,
-    currentPage: state.pagination.currentPage
   }));
 
   useEffect(() => {
-    store.actions.catalog.load(select.currentPage);
-  }, [select.currentPage]);
+    store.actions.catalog.firstLoad();
+  }, []);
 
   const callbacks = {
     // Добавление в корзину
@@ -29,24 +31,26 @@ function Main() {
     // Открытие модалки корзины
     openModalBasket: useCallback(() => store.actions.modals.open('basket'), [store]),
     // Изменение текущей страницы
-    changePage: useCallback((newPage) => store.actions.pagination.setPage(newPage), []),
+    changePage: useCallback((newPage) => store.actions.catalog.loadByPage(newPage), []),
   }
 
   const renders = {
     item: useCallback((item) => {
-      return <Item item={item} onAdd={callbacks.addToBasket}/>
+      return <Item item={item} onAdd={callbacks.addToBasket} />
     }, [callbacks.addToBasket]),
   };
 
   return (
     <PageLayout>
-      <Head title='Магазин'/>
+      <Head title='Магазин' />
       <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
-                  sum={select.sum}/>
-      <List list={select.list} renderItem={renders.item}/>
-      <Pagination currentPage={select.currentPage}
-                  lastPage={25}
-                  onChangeCurrentPage={callbacks.changePage}/>
+        sum={select.sum} />
+      <List list={select.list} renderItem={renders.item} />
+      {select.lastPage > 1 && (
+        <Pagination currentPage={select.currentPage}
+          lastPage={select.lastPage}
+          onChangeCurrentPage={callbacks.changePage} />
+      )}
     </PageLayout>
 
   );
