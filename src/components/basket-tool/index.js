@@ -4,12 +4,13 @@ import {cn as bem} from '@bem-react/classname';
 import {numberFormat, plural} from "../../utils";
 import './style.css';
 import { NavLink } from "react-router-dom";
+import Breadcrumbs from "../breadcrumbs";
 
 function BasketTool({sum, amount, onOpen}) {
   const cn = bem('BasketTool');
   return (
     <div className={cn()}>
-      <NavLink className={cn('link')} to='/'>Главная</NavLink>
+      <Breadcrumbs classNames={cn('breadcrumbs')}/>
       <span className={cn('label')}>В корзине:</span>
       <span className={cn('total')}>
         {amount

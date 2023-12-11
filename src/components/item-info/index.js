@@ -7,10 +7,6 @@ function ItemInfo({ id, description, price, edition, madeIn, category, addToBask
 
   const cn = bem('Item-info');
 
-  const callbacks = {
-    onAdd: (e) => props.onAdd(props.item._id)
-  }
-
   return (
     <div className={cn()}>
       <div className={cn('description')}>
